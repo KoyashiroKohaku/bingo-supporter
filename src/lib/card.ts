@@ -4,6 +4,21 @@ import { Square } from "./square";
 import { CardInfo } from "./cardInfo";
 
 export class Card {
+  private static readonly bingoPatterns = [
+    [0, 1, 2, 3, 4],
+    [5, 6, 7, 8, 9],
+    [10, 11, 12, 13, 14],
+    [15, 16, 17, 18, 19],
+    [20, 21, 22, 23, 24],
+    [0, 5, 10, 15, 20],
+    [1, 6, 11, 16, 21],
+    [2, 7, 12, 17, 22],
+    [3, 8, 13, 18, 23],
+    [4, 9, 14, 19, 24],
+    [0, 6, 12, 18, 24],
+    [4, 8, 12, 16, 20],
+  ];
+
   private readonly _b: Column;
   private readonly _i: Column;
   private readonly _n: Column;
@@ -30,10 +45,6 @@ export class Card {
     this._o = new Column(ColumnType.o, cardInfo.o);
   }
 
-  public get squares(): ReadonlyArray<Square> {
-    return this.columns.map((c) => c.squares).reduce((p, n) => p.concat(n));
-  }
-
   public get b(): Column {
     return this._b;
   }
@@ -58,7 +69,17 @@ export class Card {
     return [this._b, this._i, this._n, this._g, this._o];
   }
 
+  public get squares(): ReadonlyArray<Square> {
+    return this.columns.map((c) => c.squares).reduce((p, n) => p.concat(n));
+  }
+
+  public get bingoCount(): number {
+    return Card.bingoPatterns.filter((b) =>
+      b.every((i) => this.squares[i].hasPunchedOut)
+    ).length;
+  }
+
   public get isBingo(): boolean {
-    return false;
+    return this.bingoCount !== 0;
   }
 }
