@@ -1,5 +1,5 @@
 import { Card } from "./card";
-import { CardInfo } from './cardInfo';
+import { CardInfo } from "./cardInfo";
 
 export class Bingo {
   private readonly _cards: Array<Card> = new Array<Card>();

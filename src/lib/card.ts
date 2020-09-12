@@ -4,92 +4,58 @@ import { Square } from "./square";
 import { CardInfo } from "./cardInfo";
 
 export class Card {
-  private readonly _columns: Array<Column> = [
-    new Column(ColumnType.b),
-    new Column(ColumnType.i),
-    new Column(ColumnType.n),
-    new Column(ColumnType.g),
-    new Column(ColumnType.o)
-  ];
+  private readonly _b: Column;
+  private readonly _i: Column;
+  private readonly _n: Column;
+  private readonly _g: Column;
+  private readonly _o: Column;
 
   constructor(cardInfo: CardInfo) {
+    const squareLength = 5;
+
     if (
-      cardInfo.b.length != 5 ||
-      cardInfo.i.length != 5 ||
-      cardInfo.n.length != 5 ||
-      cardInfo.g.length != 5 ||
-      cardInfo.o.length != 5
+      cardInfo.b.length != squareLength ||
+      cardInfo.i.length != squareLength ||
+      cardInfo.n.length != squareLength ||
+      cardInfo.g.length != squareLength ||
+      cardInfo.o.length != squareLength
     ) {
       throw new RangeError();
     }
 
-    // b
-    for (let i = 0; i < 5; i++) {
-      const number = cardInfo.b[i];
-      const square = this.b.squares[i];
-
-      square.number = number;
-    }
-
-    // i
-    for (let i = 0; i < 5; i++) {
-      const number = cardInfo.i[i];
-      const square = this.i.squares[i];
-
-      square.number = number;
-    }
-
-    // n
-    for (let i = 0; i < 5; i++) {
-      const number = cardInfo.n[i];
-      const square = this.n.squares[i];
-
-      square.number = number;
-    }
-
-    // g
-    for (let i = 0; i < 5; i++) {
-      const number = cardInfo.g[i];
-      const square = this.g.squares[i];
-
-      square.number = number;
-    }
-
-    // o
-    for (let i = 0; i < 5; i++) {
-      const number = cardInfo.o[i];
-      const square = this.o.squares[i];
-
-      square.number = number;
-    }
+    this._b = new Column(ColumnType.b, cardInfo.b);
+    this._i = new Column(ColumnType.i, cardInfo.i);
+    this._n = new Column(ColumnType.n, cardInfo.n);
+    this._g = new Column(ColumnType.g, cardInfo.g);
+    this._o = new Column(ColumnType.o, cardInfo.o);
   }
 
   public get squares(): ReadonlyArray<Square> {
-    return this.columns.map(c => c.squares).reduce((p, n) => p.concat(n));
-  }
-
-  public get columns(): ReadonlyArray<Column> {
-    return this._columns;
+    return this.columns.map((c) => c.squares).reduce((p, n) => p.concat(n));
   }
 
   public get b(): Column {
-    return this.columns[0];
+    return this._b;
   }
 
   public get i(): Column {
-    return this.columns[1];
+    return this._i;
   }
 
   public get n(): Column {
-    return this.columns[2];
+    return this._n;
   }
 
   public get g(): Column {
-    return this.columns[3];
+    return this._g;
   }
 
   public get o(): Column {
-    return this.columns[4];
+    return this._o;
+  }
+
+  public get columns(): ReadonlyArray<Column> {
+    return [this._b, this._i, this._n, this._g, this._o];
   }
 
   public get isBingo(): boolean {
