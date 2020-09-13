@@ -16,7 +16,7 @@ describe("bingo.ts", () => {
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
       g: [46, 47, 48, 49, 50],
-      o: [61, 62, 63, 64, 65],
+      o: [61, 62, 63, 64, 65]
     };
     bingo.addCard(cardInfo);
     expect(bingo.cards.length).toBe(1);
@@ -56,7 +56,7 @@ describe("bingo.ts", () => {
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
       g: [46, 47, 48, 49, 50],
-      o: [61, 62, 63, 64, 65],
+      o: [61, 62, 63, 64, 65]
     };
     bingo.addCard(cardInfo);
     expect(bingo.history.size).toBe(0);
