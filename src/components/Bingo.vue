@@ -24,7 +24,7 @@ import { Bingo } from "@/lib/bingo";
 export default defineComponent({
   name: "Bingo",
   components: {
-    Card,
+    Card
   },
   setup() {
     const bingo = reactive(new Bingo());
@@ -33,7 +33,7 @@ export default defineComponent({
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
       g: [46, 47, 48, 49, 50],
-      o: [61, 62, 63, 64, 65],
+      o: [61, 62, 63, 64, 65]
     });
     const input = ref("");
 
@@ -43,7 +43,7 @@ export default defineComponent({
         i: [16, 17, 18, 19, 20],
         n: [31, 32, 33, 34, 45],
         g: [46, 47, 48, 49, 50],
-        o: [61, 62, 63, 64, 65],
+        o: [61, 62, 63, 64, 65]
       });
     const remove = () => bingo.removeCard();
 
@@ -53,7 +53,7 @@ export default defineComponent({
     };
 
     return { bingo, input, add, remove, addHistory };
-  },
+  }
 });
 </script>
 

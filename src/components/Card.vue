@@ -21,21 +21,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from "vue";
+import { defineComponent, PropType } from "vue";
 import Square from "./Square.vue";
 import { Card } from "@/lib/card";
 
 export default defineComponent({
   name: "Card",
   components: {
-    Square,
+    Square
   },
   props: {
     card: {
       type: Object as PropType<Card>,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 });
 </script>
 

@@ -13,8 +13,8 @@ export default defineComponent({
   props: {
     square: {
       type: Object as PropType<Square>,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const text = computed(() => {
@@ -26,7 +26,7 @@ export default defineComponent({
     });
 
     return { text };
-  },
+  }
 });
 </script>
 
