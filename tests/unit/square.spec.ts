@@ -4,34 +4,34 @@ import { ColumnType } from "@/lib/columnType";
 describe("square.ts", () => {
   it("constructor", () => {
     // -1 ~ 100
-    const allRange = [...Array(102).keys()].map((i) => i - 1);
+    const allRange = [...Array(102).keys()].map(i => i - 1);
 
     const columns = [
       {
         columnType: ColumnType.b,
-        range: [...Array(15).keys()].map((i) => i + 1),
+        range: [...Array(15).keys()].map(i => i + 1)
       },
       {
         columnType: ColumnType.i,
-        range: [...Array(15).keys()].map((i) => i + 16),
+        range: [...Array(15).keys()].map(i => i + 16)
       },
       {
         columnType: ColumnType.n,
-        range: [...Array(15).keys()].map((i) => i + 31),
+        range: [...Array(15).keys()].map(i => i + 31)
       },
       {
         columnType: ColumnType.g,
-        range: [...Array(15).keys()].map((i) => i + 46),
+        range: [...Array(15).keys()].map(i => i + 46)
       },
       {
         columnType: ColumnType.o,
-        range: [...Array(15).keys()].map((i) => i + 61),
-      },
+        range: [...Array(15).keys()].map(i => i + 61)
+      }
     ];
 
     for (const i of allRange) {
       for (const column of columns) {
-        if (column.range.some((n) => n === i)) {
+        if (column.range.some(n => n === i)) {
           const square = new Square(column.columnType, i);
           expect(square.number).toBe(i);
           expect(square.hasPunchedOut).toBe(false);

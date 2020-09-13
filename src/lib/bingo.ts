@@ -14,7 +14,18 @@ export class Bingo {
   }
 
   public addCard(cardInfo: CardInfo): void {
-    this._cards.push(new Card(cardInfo));
+    const card = new Card(cardInfo);
+
+    for (const number of this._history) {
+      for (const square of card.squares) {
+        if (square.number === number) {
+          square.punchOut();
+          break;
+        }
+      }
+    }
+
+    this._cards.push(card);
   }
 
   public removeCard(): void {

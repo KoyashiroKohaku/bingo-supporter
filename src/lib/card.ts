@@ -16,7 +16,7 @@ export class Card {
     [3, 8, 13, 18, 23],
     [4, 9, 14, 19, 24],
     [0, 6, 12, 18, 24],
-    [4, 8, 12, 16, 20],
+    [4, 8, 12, 16, 20]
   ];
 
   private readonly _b: Column;
@@ -70,12 +70,12 @@ export class Card {
   }
 
   public get squares(): ReadonlyArray<Square> {
-    return this.columns.map((c) => c.squares).reduce((p, n) => p.concat(n));
+    return this.columns.map(c => c.squares).reduce((p, n) => p.concat(n));
   }
 
   public get bingoCount(): number {
-    return Card.bingoPatterns.filter((b) =>
-      b.every((i) => this.squares[i].hasPunchedOut)
+    return Card.bingoPatterns.filter(b =>
+      b.every(i => this.squares[i].hasPunchedOut)
     ).length;
   }
 
