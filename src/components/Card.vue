@@ -3,20 +3,24 @@
     <div>
       {{ card.isBingo }}
     </div>
-    <table>
-      <tr>
-        <th>B</th>
-        <th>I</th>
-        <th>N</th>
-        <th>G</th>
-        <th>O</th>
-      </tr>
-      <tr v-for="i in [0, 1, 2, 3, 4]" :key="i">
-        <td v-for="j in [0, 1, 2, 3, 4]" :key="j">
-          <Square :square="card.columns[j].squares[i]" />
-        </td>
-      </tr>
-    </table>
+    <div class="column-container">
+      <div
+        class="column-item"
+        v-for="[column, i] in card.columns.map((c, i) => [c, i])"
+        :key="column"
+      >
+        <div>{{ bingo[i] }}</div>
+        <div class="square-container">
+          <div
+            class="square-item"
+            v-for="square in column.squares"
+            :key="square"
+          >
+            <Square :square="square" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,8 +39,33 @@ export default defineComponent({
       type: Object as PropType<Card>,
       required: true
     }
+  },
+  setup() {
+    const bingo = ["B", "I", "N", "G", "O"];
+    return { bingo };
   }
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.card {
+  font-size: 1.5em;
+  text-align: center;
+
+  .column-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .column-item {
+      width: 20%;
+
+      .square-container {
+        .square-item {
+          height: 20%;
+          padding: 0.1em;
+        }
+      }
+    }
+  }
+}
+</style>

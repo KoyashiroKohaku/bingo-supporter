@@ -5,12 +5,16 @@
       <button @click="add">+</button>
       <button @click="remove">-</button>
     </div>
-    <div v-for="card in bingo.cards" :key="card">
-      <Card :card="card" />
+    <div class="card-container">
+      <div class="card-item" v-for="card in bingo.cards" :key="card">
+        <Card :card="card" />
+      </div>
     </div>
     <div>
       <input type="text" v-model="input" />
       <button @click="addHistory">Add</button>
+    </div>
+    <div>
       {{ Array.from(bingo.history) }}
     </div>
   </div>
@@ -52,4 +56,13 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .card-item {
+    padding: 1em;
+  }
+}
+</style>
