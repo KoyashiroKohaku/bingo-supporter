@@ -48,6 +48,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+$main-color: #268aff;
+
 .card {
   font-size: 1.5em;
   text-align: center;
@@ -55,6 +57,7 @@ export default defineComponent({
   .column-container {
     display: flex;
     flex-wrap: wrap;
+    color: $main-color;
 
     .column-item {
       width: 20%;

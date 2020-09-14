@@ -1,5 +1,5 @@
 <template>
-  <div class="square">
+  <div class="square" v-bind:class="style">
     {{ text }}
   </div>
 </template>
@@ -18,25 +18,38 @@ export default defineComponent({
   },
   setup(props) {
     const text = computed(() => {
+      return props?.square?.number;
+    });
+
+    const style = computed(() => {
       if (props?.square?.hasPunchedOut) {
-        return "X";
-      } else {
-        return props?.square?.number;
+        return "punched-out";
       }
     });
 
-    return { text };
+    return { text, style };
   }
 });
 </script>
 
 <style scoped lang="scss">
+$main-color: #268aff;
+$white-color: #ffffff;
+
 .square {
   border: solid;
+
   width: 2em;
   height: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-color: $main-color;
+  color: $main-color;
+}
+
+.punched-out {
+  background-color: $main-color;
+  color: $white-color;
 }
 </style>
