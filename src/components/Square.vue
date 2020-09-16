@@ -1,33 +1,37 @@
 <template>
-  <div class="square" v-bind:class="style">
+  <div class="square" v-bind:class="style" @click="punchOut">
     {{ text }}
   </div>
 </template>
 
 <script lang="ts">
-import { Square } from "@/lib/square";
 import { defineComponent, computed, PropType } from "vue";
 
 export default defineComponent({
   name: "Square",
   props: {
     square: {
-      type: Object as PropType<Square>,
+      type: Object as PropType<{ value: number; hasPunchedOut: boolean }>,
       required: true
     }
   },
-  setup(props) {
+  setup(props, context) {
     const text = computed(() => {
-      return props?.square?.number;
+      return props.square.value;
     });
 
     const style = computed(() => {
-      if (props?.square?.hasPunchedOut) {
+      if (props.square.hasPunchedOut) {
         return "punched-out";
       }
     });
 
-    return { text, style };
+    const punchOut = () => {
+      console.log(props.square.value);
+      context.emit("punch-out", props.square.value);
+    };
+
+    return { text, style, punchOut };
   }
 });
 </script>

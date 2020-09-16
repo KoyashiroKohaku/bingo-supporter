@@ -7,7 +7,7 @@
     </div>
     <div class="card-container">
       <div class="card-item" v-for="card in bingo.cards" :key="card">
-        <Card :card="card" />
+        <Card :card="card" @punch-out="punchOut" />
       </div>
     </div>
     <div>
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import Card from "./Card.vue";
-import { Bingo } from "@/lib/bingo";
+import { Bingo } from "@/lib/Bingo";
 
 export default defineComponent({
   name: "Bingo",
@@ -45,18 +45,28 @@ export default defineComponent({
     const remove = () => bingo.removeCard();
 
     const addHistory = () => {
-      const number = Number(input.value);
-      bingo.addHistory(number);
+      const value = Number(input.value);
+      if (Number.isInteger(value) && 1 <= value && value <= 75) {
+        bingo.addHistory(value);
+      }
+    };
+
+    const punchOut = (value: number) => {
+      bingo.addHistory(value);
     };
 
     add();
 
-    return { bingo, input, add, remove, addHistory };
+    return { bingo, input, add, remove, addHistory, punchOut };
   }
 });
 </script>
 
 <style scoped lang="scss">
+h1 {
+  font-size: 3em;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;

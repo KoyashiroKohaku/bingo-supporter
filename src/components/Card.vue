@@ -1,24 +1,24 @@
 <template>
   <div class="card">
-    <div>
-      {{ card.isBingo }}
-    </div>
     <div class="column-container">
       <div
         class="column-item"
         v-for="[column, i] in card.columns.map((c, i) => [c, i])"
         :key="column"
       >
-        <div>{{ bingo[i] }}</div>
+        <div class="column-label">{{ bingo[i] }}</div>
         <div class="square-container">
-          <div
-            class="square-item"
-            v-for="square in column.squares"
-            :key="square"
-          >
-            <Square :square="square" />
+          <div class="square-item" v-for="square in column" :key="square">
+            <Square :square="square" @punch-out="punchOut" />
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="debug">
+      <div>isBingo: {{ card.isBingo }}</div>
+      <div v-for="bingoLine in card.bingoLines" :key="bingoLine">
+        {{ bingoLine }}
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import Square from "./Square.vue";
-import { Card } from "@/lib/card";
+import { Card } from "@/lib/Card";
 
 export default defineComponent({
   name: "Card",
@@ -40,9 +40,14 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(_, context) {
     const bingo = ["B", "I", "N", "G", "O"];
-    return { bingo };
+
+    const punchOut = (value: number) => {
+      context.emit("punch-out", value);
+    };
+
+    return { bingo, punchOut };
   }
 });
 </script>
@@ -61,6 +66,10 @@ $main-color: #268aff;
 
     .column-item {
       width: 20%;
+
+      .column-label {
+        font-size: 1.5em;
+      }
 
       .square-container {
         .square-item {
