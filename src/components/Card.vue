@@ -15,11 +15,31 @@
       </div>
     </div>
 
-    <div class="debug">
-      <div>isBingo: {{ card.isBingo }}</div>
-      <div v-for="bingoLine in card.bingoLines" :key="bingoLine">
-        {{ bingoLine }}
-      </div>
+    <div class="debug" v-if="isDebug">
+      <div>[isBingo]: {{ card.isBingo }}</div>
+      <hr />
+      <div>[isReach]: {{ card.isReach }}</div>
+      <hr />
+      <div>[bingoLines]:</div>
+      <ul>
+        <li v-for="bingoLine in card.bingoLines" :key="bingoLine">
+          {{ bingoLine }}
+        </li>
+      </ul>
+      <hr />
+      <div>[reachLines]:</div>
+      <ul>
+        <li v-for="reachLine in card.reachLines" :key="reachLine">
+          {{ reachLine }}
+        </li>
+      </ul>
+      <textarea
+        name=""
+        id=""
+        cols="30"
+        rows="5"
+        :value="JSON.stringify(card.export())"
+      ></textarea>
     </div>
   </div>
 </template>
@@ -38,6 +58,9 @@ export default defineComponent({
     card: {
       type: Object as PropType<Card>,
       required: true
+    },
+    isDebug: {
+      type: Boolean
     }
   },
   setup(_, context) {
@@ -78,6 +101,13 @@ $main-color: #268aff;
         }
       }
     }
+  }
+}
+
+.debug {
+  font-size: 0.5em;
+  li {
+    text-align: left;
   }
 }
 </style>

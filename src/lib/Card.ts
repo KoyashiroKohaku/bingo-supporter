@@ -47,16 +47,16 @@ export enum BingoLine {
 }
 
 const bingoLineMap = new Map([
-  [BingoLine.Horizontal0, [0, 1, 2, 3, 4]],
-  [BingoLine.Horizontal1, [5, 6, 7, 8, 9]],
-  [BingoLine.Horizontal2, [10, 11, 12, 13, 14]],
-  [BingoLine.Horizontal3, [15, 16, 17, 18, 19]],
-  [BingoLine.Horizontal4, [20, 21, 22, 23, 24]],
-  [BingoLine.Vertical0, [0, 5, 10, 15, 20]],
-  [BingoLine.Vertical1, [1, 6, 11, 16, 21]],
-  [BingoLine.Vertical2, [2, 7, 12, 17, 22]],
-  [BingoLine.Vertical3, [3, 8, 13, 18, 23]],
-  [BingoLine.Vertical4, [4, 9, 14, 19, 24]],
+  [BingoLine.Horizontal0, [0, 5, 10, 15, 20]],
+  [BingoLine.Horizontal1, [1, 6, 11, 16, 21]],
+  [BingoLine.Horizontal2, [2, 7, 12, 17, 22]],
+  [BingoLine.Horizontal3, [3, 8, 13, 18, 23]],
+  [BingoLine.Horizontal4, [4, 9, 14, 19, 24]],
+  [BingoLine.Vertical0, [0, 1, 2, 3, 4]],
+  [BingoLine.Vertical1, [5, 6, 7, 8, 9]],
+  [BingoLine.Vertical2, [10, 11, 12, 13, 14]],
+  [BingoLine.Vertical3, [15, 16, 17, 18, 19]],
+  [BingoLine.Vertical4, [20, 21, 22, 23, 24]],
   [BingoLine.Diagonal0, [0, 6, 12, 18, 24]],
   [BingoLine.Diagonal1, [4, 8, 12, 16, 20]]
 ]);
@@ -130,6 +130,23 @@ export class Card {
     return this._columns
       .map(c => c as Array<Square>)
       .reduce((p, n) => p.concat(n)) as Squares;
+  }
+
+  public get reachLines(): ReadonlyArray<BingoLine> {
+    return [...bingoLineMap]
+      .filter(
+        ([, value]) =>
+          value.filter(i => this.squares[i].hasPunchedOut).length == 4
+      )
+      .map(([key]) => key);
+  }
+
+  public get reachCount(): number {
+    return this.reachLines.length;
+  }
+
+  public get isReach(): boolean {
+    return this.reachCount !== 0;
   }
 
   public get bingoLines(): ReadonlyArray<BingoLine> {

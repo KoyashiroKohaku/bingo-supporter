@@ -7,15 +7,20 @@
     </div>
     <div class="card-container">
       <div class="card-item" v-for="card in bingo.cards" :key="card">
-        <Card :card="card" @punch-out="punchOut" />
+        <Card :card="card" :isDebug="isDebug" @punch-out="punchOut" />
       </div>
     </div>
     <div>
       <input type="text" v-model="input" />
       <button @click="addHistory">Add</button>
+      <button @click="clearHistory">Clear</button>
     </div>
     <div>
       {{ Array.from(bingo.history) }}
+    </div>
+    <div class="is-debug">
+      <input type="checkbox" id="isDebug" v-model="isDebug" />
+      <label for="isDebug">Debug: {{ isDebug }}</label>
     </div>
   </div>
 </template>
@@ -33,6 +38,7 @@ export default defineComponent({
   setup() {
     const bingo = reactive(new Bingo());
     const input = ref("");
+    const isDebug = ref(false);
 
     const add = () =>
       bingo.addCard({
@@ -42,13 +48,20 @@ export default defineComponent({
         g: [46, 47, 48, 49, 50],
         o: [61, 62, 63, 64, 65]
       });
+
     const remove = () => bingo.removeCard();
 
     const addHistory = () => {
       const value = Number(input.value);
       if (Number.isInteger(value) && 1 <= value && value <= 75) {
         bingo.addHistory(value);
+        input.value = "";
       }
+    };
+
+    const clearHistory = () => {
+      bingo.clearHistory();
+      input.value = "";
     };
 
     const punchOut = (value: number) => {
@@ -57,7 +70,16 @@ export default defineComponent({
 
     add();
 
-    return { bingo, input, add, remove, addHistory, punchOut };
+    return {
+      bingo,
+      input,
+      isDebug,
+      add,
+      remove,
+      addHistory,
+      clearHistory,
+      punchOut
+    };
   }
 });
 </script>
@@ -74,5 +96,11 @@ h1 {
   .card-item {
     padding: 1em;
   }
+}
+
+.is-debug {
+  position: absolute;
+  top: 0%;
+  right: 0%;
 }
 </style>

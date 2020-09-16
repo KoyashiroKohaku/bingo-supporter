@@ -53,5 +53,13 @@ export class Bingo {
 
   public clearHistory(): void {
     this._history.clear();
+
+    for (const card of this._cards) {
+      for (const column of card.columns) {
+        for (const square of column) {
+          square.hasPunchedOut = false;
+        }
+      }
+    }
   }
 }
