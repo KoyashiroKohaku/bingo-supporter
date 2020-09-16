@@ -1,8 +1,9 @@
-import { Card } from "@/lib/card";
+import { Card } from "@/lib/Card";
+import { CardInfo } from "@/lib/CardInfo";
 
-describe("bingo.ts", () => {
-  it("constructor", () => {
-    const cardInfo = {
+describe("Card.ts", () => {
+  describe("constructor", () => {
+    const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
@@ -12,24 +13,50 @@ describe("bingo.ts", () => {
 
     const card = new Card(cardInfo);
 
-    expect(card.columns.length).toBe(5);
-    expect(card.columns[0]).toBe(card.b);
-    expect(card.columns[1]).toBe(card.i);
-    expect(card.columns[2]).toBe(card.n);
-    expect(card.columns[3]).toBe(card.g);
-    expect(card.columns[4]).toBe(card.o);
+    it("cardInfoと一致しているか", () => {
+      expect(card.b.map(s => s.value)).toEqual(cardInfo.b);
+      expect(card.i.map(s => s.value)).toEqual(cardInfo.i);
+      expect(card.n.map(s => s.value)).toEqual(cardInfo.n);
+      expect(card.g.map(s => s.value)).toEqual(cardInfo.g);
+      expect(card.o.map(s => s.value)).toEqual(cardInfo.o);
+    });
 
-    expect(card.squares.length).toBe(25);
-    expect(card.b.squares).toEqual(card.squares.slice(0, 5));
-    expect(card.i.squares).toEqual(card.squares.slice(5, 10));
-    expect(card.n.squares).toEqual(card.squares.slice(10, 15));
-    expect(card.g.squares).toEqual(card.squares.slice(15, 20));
-    expect(card.o.squares).toEqual(card.squares.slice(20, 25));
+    it("columnsとb, i, n, g, oが一致しているか", () => {
+      expect(card.columns[0]).toBe(card.b);
+      expect(card.columns[1]).toBe(card.i);
+      expect(card.columns[2]).toBe(card.n);
+      expect(card.columns[3]).toBe(card.g);
+      expect(card.columns[4]).toBe(card.o);
+    });
 
-    expect(card.isBingo).toBe(false);
+    it("b, i, n, g, oとsquaresが一致しているか", () => {
+      expect(card.b).toEqual(card.squares.slice(0, 5));
+      expect(card.i).toEqual(card.squares.slice(5, 10));
+      expect(card.n).toEqual(card.squares.slice(10, 15));
+      expect(card.g).toEqual(card.squares.slice(15, 20));
+      expect(card.o).toEqual(card.squares.slice(20, 25));
+    });
+
+    it("square.hasPunchedOutの初期値がfalseとなっているか", () => {
+      for (const square of card.squares) {
+        expect(square.hasPunchedOut).toBe(false);
+      }
+    });
+
+    it("card.bingoLines.lengthの初期値が0となっているか", () => {
+      expect(card.bingoLines.length).toBe(0);
+    });
+
+    it("card.bingoCountの初期値が0となっているか", () => {
+      expect(card.bingoCount).toBe(0);
+    });
+
+    it("card.isBingoの初期値がfalseとなっているか", () => {
+      expect(card.bingoLines.length).toBe(0);
+    });
   });
 
-  it("isBingo", () => {
+  describe("isBingo", () => {
     const bingoPatterns = [
       [0, 1, 2, 3, 4],
       [5, 6, 7, 8, 9],
@@ -45,7 +72,7 @@ describe("bingo.ts", () => {
       [4, 8, 12, 16, 20]
     ];
 
-    const cardInfo = {
+    const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
@@ -57,13 +84,14 @@ describe("bingo.ts", () => {
       const card = new Card(cardInfo);
       expect(card.isBingo).toBe(false);
       for (const patternIndex of pattern) {
-        card.squares[patternIndex].punchOut();
+        const value = card.squares[patternIndex].value;
+        card.tryPunchOut(value);
       }
       expect(card.isBingo).toBe(true);
     }
   });
 
-  it("isBingo", () => {
+  describe("isBingo", () => {
     const bingoPatterns = [
       [0, 1, 2, 3, 4],
       [5, 6, 7, 8, 9],
@@ -79,7 +107,7 @@ describe("bingo.ts", () => {
       [4, 8, 12, 16, 20]
     ];
 
-    const cardInfo = {
+    const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
@@ -93,7 +121,8 @@ describe("bingo.ts", () => {
       expect(card.bingoCount).toBe(0);
       for (const pattern of patterns) {
         for (const patternIndex of pattern) {
-          card.squares[patternIndex].punchOut();
+          const value = card.squares[patternIndex].value;
+          card.tryPunchOut(value);
         }
       }
       if (i === 5) {
@@ -102,5 +131,20 @@ describe("bingo.ts", () => {
         expect(card.bingoCount).toBe(i);
       }
     }
+  });
+  describe("export", () => {
+    const cardInfo: CardInfo = {
+      b: [1, 2, 3, 4, 5],
+      i: [16, 17, 18, 19, 20],
+      n: [31, 32, 33, 34, 45],
+      g: [46, 47, 48, 49, 50],
+      o: [61, 62, 63, 64, 65]
+    };
+
+    const card = new Card(cardInfo);
+
+    it("exportできているか", () => {
+      expect(card.export()).toEqual(cardInfo);
+    });
   });
 });

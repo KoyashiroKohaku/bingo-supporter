@@ -1,6 +1,7 @@
-import { Bingo } from "@/lib/bingo";
+import { Bingo } from "@/lib/Bingo";
+import { CardInfo } from "@/lib/CardInfo";
 
-describe("bingo.ts", () => {
+describe("Bingo.ts", () => {
   it("constructor", () => {
     const bingo = new Bingo();
     expect(bingo.cards.length).toBe(0);
@@ -11,7 +12,7 @@ describe("bingo.ts", () => {
     const bingo = new Bingo();
     expect(bingo.cards.length).toBe(0);
 
-    const cardInfo = {
+    const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
@@ -22,11 +23,11 @@ describe("bingo.ts", () => {
     expect(bingo.cards.length).toBe(1);
     for (let i = 0; i < 5; i++) {
       const card = bingo.cards[0];
-      expect(card.b.squares[i].number).toBe(cardInfo.b[i]);
-      expect(card.i.squares[i].number).toBe(cardInfo.i[i]);
-      expect(card.n.squares[i].number).toBe(cardInfo.n[i]);
-      expect(card.g.squares[i].number).toBe(cardInfo.g[i]);
-      expect(card.o.squares[i].number).toBe(cardInfo.o[i]);
+      expect(card.b[i].value).toBe(cardInfo.b[i]);
+      expect(card.i[i].value).toBe(cardInfo.i[i]);
+      expect(card.n[i].value).toBe(cardInfo.n[i]);
+      expect(card.g[i].value).toBe(cardInfo.g[i]);
+      expect(card.o[i].value).toBe(cardInfo.o[i]);
     }
 
     bingo.addCard(cardInfo);
@@ -45,13 +46,13 @@ describe("bingo.ts", () => {
     bingo.addCard(cardInfo);
 
     for (const card of bingo.cards) {
-      expect(card.b.squares[0].hasPunchedOut).toBe(true);
+      expect(card.b[0].hasPunchedOut).toBe(true);
     }
   });
 
   it("add and clear history", () => {
     const bingo = new Bingo();
-    const cardInfo = {
+    const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
       i: [16, 17, 18, 19, 20],
       n: [31, 32, 33, 34, 45],
@@ -63,7 +64,7 @@ describe("bingo.ts", () => {
     bingo.addHistory(1);
     expect(bingo.history.size).toBe(1);
     expect(bingo.history.has(1)).toBe(true);
-    expect(bingo.cards[0].b.squares[0].hasPunchedOut).toBe(true);
+    expect(bingo.cards[0].b[0].hasPunchedOut).toBe(true);
 
     bingo.clearHistory();
     expect(bingo.history.size).toBe(0);
