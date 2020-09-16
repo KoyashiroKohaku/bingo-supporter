@@ -1,5 +1,5 @@
-import { Card } from "./card";
-import { CardInfo } from "./cardInfo";
+import { Card } from "./Card";
+import { CardInfo } from "./CardInfo";
 
 export class Bingo {
   private readonly _cards: Array<Card> = new Array<Card>();
@@ -16,13 +16,8 @@ export class Bingo {
   public addCard(cardInfo: CardInfo): void {
     const card = new Card(cardInfo);
 
-    for (const number of this._history) {
-      for (const square of card.squares) {
-        if (square.number === number) {
-          square.punchOut();
-          break;
-        }
-      }
+    for (const value of this._history) {
+      card.tryPunchOut(value);
     }
 
     this._cards.push(card);
@@ -40,25 +35,20 @@ export class Bingo {
     this._cards.length = 0;
   }
 
-  public addHistory(number: number): void {
-    if (!(1 <= number && number <= 75)) {
+  public addHistory(value: number): void {
+    if (!(1 <= value && value <= 75) && Number.isInteger(value)) {
       throw new RangeError();
     }
 
     for (const card of this._cards) {
-      for (const square of card.squares) {
-        if (square.number === number) {
-          square.punchOut();
-          break;
-        }
-      }
+      card.tryPunchOut(value);
     }
 
-    this._history.add(number);
+    this._history.add(value);
   }
 
-  public removeHistory(number: number): void {
-    this._history.delete(number);
+  public removeHistory(value: number): boolean {
+    return this._history.delete(value);
   }
 
   public clearHistory(): void {

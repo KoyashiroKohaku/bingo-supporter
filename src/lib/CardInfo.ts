@@ -1,7 +1,7 @@
 export interface CardInfo {
-  b: Array<number>;
-  i: Array<number>;
-  n: Array<number>;
-  g: Array<number>;
-  o: Array<number>;
+  b: [number, number, number, number, number];
+  i: [number, number, number, number, number];
+  n: [number, number, number, number, number];
+  g: [number, number, number, number, number];
+  o: [number, number, number, number, number];
 }
