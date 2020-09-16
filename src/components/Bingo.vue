@@ -5,19 +5,18 @@
       <button @click="add">+</button>
       <button @click="remove">-</button>
     </div>
+
     <div class="card-container">
       <div class="card-item" v-for="card in bingo.cards" :key="card">
         <Card :card="card" :isDebug="isDebug" @punch-out="punchOut" />
       </div>
     </div>
-    <div>
-      <input type="text" v-model="input" />
-      <button @click="addHistory">Add</button>
+
+    <div class="history">
+      <History :history="bingo.history" @punch-out="punchOut" />
       <button @click="clearHistory">Clear</button>
     </div>
-    <div>
-      {{ Array.from(bingo.history) }}
-    </div>
+
     <div class="is-debug">
       <input type="checkbox" id="isDebug" v-model="isDebug" />
       <label for="isDebug">Debug: {{ isDebug }}</label>
@@ -28,12 +27,14 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import Card from "./Card.vue";
+import History from "./History.vue";
 import { Bingo } from "@/lib/Bingo";
 
 export default defineComponent({
   name: "Bingo",
   components: {
-    Card
+    Card,
+    History
   },
   setup() {
     const bingo = reactive(new Bingo());
