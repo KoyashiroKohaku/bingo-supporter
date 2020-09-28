@@ -1,4 +1,5 @@
 import { Card } from "./Card";
+import { BingoInfo } from "./BingoInfo";
 import { CardInfo } from "./CardInfo";
 
 export class Bingo {
@@ -102,5 +103,24 @@ export class Bingo {
     this.addHistory(value);
 
     return true;
+  }
+
+  public export(): BingoInfo {
+    return {
+      cards: this.cards.map(c => c.export()),
+      history: [...this.history]
+    };
+  }
+
+  public import(bingoInfo: BingoInfo): void {
+    this.clearHistory();
+    for (const value of bingoInfo.history) {
+      this.addHistory(value);
+    }
+
+    this.clearCards();
+    for (const cardInfo of bingoInfo.cards) {
+      this.addCard(cardInfo);
+    }
   }
 }

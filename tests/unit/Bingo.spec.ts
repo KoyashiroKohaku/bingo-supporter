@@ -129,4 +129,33 @@ describe("Bingo.ts", () => {
     expect(bingo.canUndo).toBe(true);
     expect(bingo.canRedo).toBe(false);
   });
+
+  describe("export", () => {
+    const bingo = new Bingo();
+    expect(bingo.export()).toEqual({ cards: [], history: [] });
+
+    const cardInfo: CardInfo = {
+      b: [1, 2, 3, 4, 5],
+      i: [16, 17, 18, 19, 20],
+      n: [31, 32, 33, 34, 45],
+      g: [46, 47, 48, 49, 50],
+      o: [61, 62, 63, 64, 65]
+    };
+    bingo.addCard(cardInfo);
+    bingo.addCard(cardInfo);
+    expect(bingo.export()).toEqual({
+      cards: [cardInfo, cardInfo],
+      history: []
+    });
+
+    bingo.addHistory(1);
+    bingo.addHistory(2);
+    bingo.addHistory(3);
+    bingo.addHistory(4);
+    bingo.addHistory(5);
+    expect(bingo.export()).toEqual({
+      cards: [cardInfo, cardInfo],
+      history: [1, 2, 3, 4, 5]
+    });
+  });
 });
