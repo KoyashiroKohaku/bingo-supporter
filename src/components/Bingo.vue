@@ -27,10 +27,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, watch } from "vue";
 import Card from "./Card.vue";
 import History from "./History.vue";
 import { Bingo } from "@/lib/Bingo";
+import { CardInfo } from "@/lib/CardInfo";
 
 export default defineComponent({
   name: "Bingo",
@@ -76,6 +77,37 @@ export default defineComponent({
     };
 
     add();
+
+    const save = () => {
+      const bingoInfo = bingo.export();
+      localStorage.setItem("cards", JSON.stringify(bingoInfo.cards));
+      localStorage.setItem("history", JSON.stringify(bingoInfo.history));
+    };
+
+    const load = () => {
+      const cardsString = localStorage.getItem("cards");
+      const historyString = localStorage.getItem("history");
+      if (!cardsString || !historyString) {
+        return;
+      }
+
+      const cards = JSON.parse(cardsString) as Array<CardInfo>;
+      const history = JSON.parse(historyString) as Array<number>;
+
+      const bingoInfo = {
+        cards,
+        history
+      };
+      bingo.import(bingoInfo);
+    };
+
+    watch(
+      () => bingo,
+      () => save(),
+      { deep: true }
+    );
+
+    load();
 
     return {
       bingo,
