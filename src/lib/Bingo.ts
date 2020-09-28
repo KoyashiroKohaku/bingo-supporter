@@ -4,6 +4,7 @@ import { CardInfo } from "./CardInfo";
 export class Bingo {
   private readonly _cards: Array<Card> = new Array<Card>();
   private readonly _history: Set<number> = new Set<number>();
+  private readonly _redoHistory: Set<number> = new Set<number>();
 
   public get cards(): ReadonlyArray<Card> {
     return this._cards;
@@ -11,6 +12,14 @@ export class Bingo {
 
   public get history(): ReadonlySet<number> {
     return this._history;
+  }
+
+  public get canUndo(): boolean {
+    return [...this._history].pop() !== undefined;
+  }
+
+  public get canRedo(): boolean {
+    return [...this._redoHistory].pop() !== undefined;
   }
 
   public addCard(cardInfo: CardInfo): void {
@@ -61,5 +70,37 @@ export class Bingo {
         }
       }
     }
+  }
+
+  public undo(): boolean {
+    const value = [...this._history].pop();
+
+    if (!value) {
+      return false;
+    }
+
+    this._history.delete(value);
+    this._redoHistory.add(value);
+
+    for (const card of this._cards) {
+      for (const square of card.squares.filter(s => s.value === value)) {
+        square.hasPunchedOut = false;
+      }
+    }
+
+    return true;
+  }
+
+  public redo(): boolean {
+    const value = [...this._redoHistory].pop();
+
+    if (!value) {
+      return false;
+    }
+
+    this._redoHistory.delete(value);
+    this.addHistory(value);
+
+    return true;
   }
 }

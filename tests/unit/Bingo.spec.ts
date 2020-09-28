@@ -6,6 +6,8 @@ describe("Bingo.ts", () => {
     const bingo = new Bingo();
     expect(bingo.cards.length).toBe(0);
     expect(bingo.history.size).toBe(0);
+    expect(bingo.canUndo).toBe(false);
+    expect(bingo.canRedo).toBe(false);
   });
 
   it("add and remove cards", () => {
@@ -69,5 +71,62 @@ describe("Bingo.ts", () => {
     bingo.clearHistory();
     expect(bingo.history.size).toBe(0);
     expect(bingo.history.has(1)).toBe(false);
+  });
+
+  it("undo and redo", () => {
+    const bingo = new Bingo();
+    const cardInfo: CardInfo = {
+      b: [1, 2, 3, 4, 5],
+      i: [16, 17, 18, 19, 20],
+      n: [31, 32, 33, 34, 45],
+      g: [46, 47, 48, 49, 50],
+      o: [61, 62, 63, 64, 65]
+    };
+    bingo.addCard(cardInfo);
+    expect(bingo.history.size).toBe(0);
+    expect(bingo.canUndo).toBe(false);
+    expect(bingo.canRedo).toBe(false);
+
+    bingo.addHistory(1);
+    expect(bingo.history.size).toBe(1);
+    expect(bingo.history.has(1)).toBe(true);
+    expect(bingo.cards[0].b[0].hasPunchedOut).toBe(true);
+    expect(bingo.canUndo).toBe(true);
+    expect(bingo.canRedo).toBe(false);
+
+    bingo.addHistory(2);
+    expect(bingo.history.size).toBe(2);
+    expect(bingo.history.has(2)).toBe(true);
+    expect(bingo.cards[0].b[1].hasPunchedOut).toBe(true);
+    expect(bingo.canUndo).toBe(true);
+    expect(bingo.canRedo).toBe(false);
+
+    bingo.undo();
+    expect(bingo.history.size).toBe(1);
+    expect(bingo.history.has(2)).toBe(false);
+    expect(bingo.cards[0].b[2].hasPunchedOut).toBe(false);
+    expect(bingo.canUndo).toBe(true);
+    expect(bingo.canRedo).toBe(true);
+
+    bingo.undo();
+    expect(bingo.history.size).toBe(0);
+    expect(bingo.history.has(1)).toBe(false);
+    expect(bingo.cards[0].b[1].hasPunchedOut).toBe(false);
+    expect(bingo.canUndo).toBe(false);
+    expect(bingo.canRedo).toBe(true);
+
+    bingo.redo();
+    expect(bingo.history.size).toBe(1);
+    expect(bingo.history.has(1)).toBe(true);
+    expect(bingo.cards[0].b[0].hasPunchedOut).toBe(true);
+    expect(bingo.canUndo).toBe(true);
+    expect(bingo.canRedo).toBe(true);
+
+    bingo.redo();
+    expect(bingo.history.size).toBe(2);
+    expect(bingo.history.has(2)).toBe(true);
+    expect(bingo.cards[0].b[1].hasPunchedOut).toBe(true);
+    expect(bingo.canUndo).toBe(true);
+    expect(bingo.canRedo).toBe(false);
   });
 });

@@ -2,6 +2,8 @@
   <div class="bingo">
     <h1>Bingo</h1>
     <div>
+      <button @click="undo" :disabled="!bingo.canUndo">Undo</button>
+      <button @click="redo" :disabled="!bingo.canRedo">Redo</button>
       <button @click="add">+</button>
       <button @click="remove">-</button>
     </div>
@@ -52,6 +54,10 @@ export default defineComponent({
 
     const remove = () => bingo.removeCard();
 
+    const undo = () => bingo.undo();
+
+    const redo = () => bingo.redo();
+
     const addHistory = () => {
       const value = Number(input.value);
       if (Number.isInteger(value) && 1 <= value && value <= 75) {
@@ -77,6 +83,8 @@ export default defineComponent({
       isDebug,
       add,
       remove,
+      undo,
+      redo,
       addHistory,
       clearHistory,
       punchOut
