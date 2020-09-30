@@ -14,8 +14,8 @@
             >
               <input
                 type="number"
-                max="1"
-                min="75"
+                min="1"
+                max="75"
                 required
                 v-model="square.value"
               />
