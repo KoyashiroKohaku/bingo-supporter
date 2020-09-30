@@ -1,4 +1,4 @@
-import { CardInfo } from "./CardInfo";
+import { CardInfo } from './CardInfo';
 
 type Square = { value: number; hasPunchedOut: boolean };
 type Squares = [
@@ -32,18 +32,18 @@ type Column = [Square, Square, Square, Square, Square];
 type Columns = [Column, Column, Column, Column, Column];
 
 export enum BingoLine {
-  Horizontal0 = "Horizontal0",
-  Horizontal1 = "Horizontal1",
-  Horizontal2 = "Horizontal2",
-  Horizontal3 = "Horizontal3",
-  Horizontal4 = "Horizontal4",
-  Vertical0 = "Vertical0",
-  Vertical1 = "Vertical1",
-  Vertical2 = "Vertical2",
-  Vertical3 = "Vertical3",
-  Vertical4 = "Vertical4",
-  Diagonal0 = "Diagonal0",
-  Diagonal1 = "Diagonal1"
+  Horizontal0 = 'Horizontal0',
+  Horizontal1 = 'Horizontal1',
+  Horizontal2 = 'Horizontal2',
+  Horizontal3 = 'Horizontal3',
+  Horizontal4 = 'Horizontal4',
+  Vertical0 = 'Vertical0',
+  Vertical1 = 'Vertical1',
+  Vertical2 = 'Vertical2',
+  Vertical3 = 'Vertical3',
+  Vertical4 = 'Vertical4',
+  Diagonal0 = 'Diagonal0',
+  Diagonal1 = 'Diagonal1'
 }
 
 const bingoLineMap = new Map([

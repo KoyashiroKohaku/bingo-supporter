@@ -45,12 +45,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import Square from "./Square.vue";
-import { Card } from "@/lib/Card";
+import { defineComponent, PropType } from 'vue';
+import Square from './Square.vue';
+import { Card } from '@/lib/Card';
 
 export default defineComponent({
-  name: "Card",
+  name: 'Card',
   components: {
     Square
   },
@@ -64,10 +64,10 @@ export default defineComponent({
     }
   },
   setup(_, context) {
-    const bingo = ["B", "I", "N", "G", "O"];
+    const bingo = ['B', 'I', 'N', 'G', 'O'];
 
     const punchOut = (value: number) => {
-      context.emit("punch-out", value);
+      context.emit('punch-out', value);
     };
 
     return { bingo, punchOut };

@@ -27,21 +27,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, watch } from "vue";
-import Card from "./Card.vue";
-import History from "./History.vue";
-import { Bingo } from "@/lib/Bingo";
-import { CardInfo } from "@/lib/CardInfo";
+import { defineComponent, reactive, ref, watch } from 'vue';
+import Card from './Card.vue';
+import History from './History.vue';
+import { Bingo } from '@/lib/Bingo';
+import { CardInfo } from '@/lib/CardInfo';
 
 export default defineComponent({
-  name: "Bingo",
+  name: 'Bingo',
   components: {
     Card,
     History
   },
   setup() {
     const bingo = reactive(new Bingo());
-    const input = ref("");
+    const input = ref('');
     const isDebug = ref(false);
 
     const add = () =>
@@ -63,13 +63,13 @@ export default defineComponent({
       const value = Number(input.value);
       if (Number.isInteger(value) && 1 <= value && value <= 75) {
         bingo.addHistory(value);
-        input.value = "";
+        input.value = '';
       }
     };
 
     const clearHistory = () => {
       bingo.clearHistory();
-      input.value = "";
+      input.value = '';
     };
 
     const punchOut = (value: number) => {
@@ -80,13 +80,13 @@ export default defineComponent({
 
     const save = () => {
       const bingoInfo = bingo.export();
-      localStorage.setItem("cards", JSON.stringify(bingoInfo.cards));
-      localStorage.setItem("history", JSON.stringify(bingoInfo.history));
+      localStorage.setItem('cards', JSON.stringify(bingoInfo.cards));
+      localStorage.setItem('history', JSON.stringify(bingoInfo.history));
     };
 
     const load = () => {
-      const cardsString = localStorage.getItem("cards");
-      const historyString = localStorage.getItem("history");
+      const cardsString = localStorage.getItem('cards');
+      const historyString = localStorage.getItem('history');
       if (!cardsString || !historyString) {
         return;
       }

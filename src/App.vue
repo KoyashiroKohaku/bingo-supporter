@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import Bingo from "./components/Bingo.vue";
+import { defineComponent } from 'vue';
+import Bingo from './components/Bingo.vue';
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: {
     Bingo
   }

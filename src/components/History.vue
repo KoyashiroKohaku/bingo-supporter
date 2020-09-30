@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from "vue";
-import Square from "./Square.vue";
+import { defineComponent, PropType, computed } from 'vue';
+import Square from './Square.vue';
 
 export default defineComponent({
-  name: "History",
+  name: 'History',
   components: {
     Square
   },
@@ -37,7 +37,7 @@ export default defineComponent({
     );
 
     const punchOut = (value: number) => {
-      context.emit("punch-out", value);
+      context.emit('punch-out', value);
     };
 
     return { historySquares, punchOut };

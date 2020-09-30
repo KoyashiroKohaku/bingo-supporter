@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from "vue";
+import { defineComponent, computed, PropType } from 'vue';
 
 export default defineComponent({
-  name: "Square",
+  name: 'Square',
   props: {
     square: {
       type: Object as PropType<{ value: number; hasPunchedOut: boolean }>,
@@ -22,13 +22,13 @@ export default defineComponent({
 
     const style = computed(() => {
       if (props.square.hasPunchedOut) {
-        return "punched-out";
+        return 'punched-out';
       }
     });
 
     const punchOut = () => {
       console.log(props.square.value);
-      context.emit("punch-out", props.square.value);
+      context.emit('punch-out', props.square.value);
     };
 
     return { text, style, punchOut };
