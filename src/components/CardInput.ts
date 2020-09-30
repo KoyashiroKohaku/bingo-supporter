@@ -1,6 +1,6 @@
 import { defineComponent, reactive } from 'vue';
 import { SquareId } from '@/lib/SquareId';
-import { ColumnId } from '@/lib/ColumnId';
+import { ColumnType } from '@/lib/ColumnType';
 
 export default defineComponent({
   name: 'CardInput',
@@ -11,7 +11,7 @@ export default defineComponent({
     };
 
     type column = {
-      id: ColumnId;
+      id: ColumnType;
       squares: [square, square, square, square, square];
     };
 
@@ -19,7 +19,7 @@ export default defineComponent({
 
     const columns = reactive<columns>([
       {
-        id: ColumnId.B,
+        id: ColumnType.b,
         squares: [
           { id: SquareId.B0, value: '' },
           { id: SquareId.B1, value: '' },
@@ -29,7 +29,7 @@ export default defineComponent({
         ]
       },
       {
-        id: ColumnId.I,
+        id: ColumnType.i,
         squares: [
           { id: SquareId.I0, value: '' },
           { id: SquareId.I1, value: '' },
@@ -39,7 +39,7 @@ export default defineComponent({
         ]
       },
       {
-        id: ColumnId.N,
+        id: ColumnType.n,
         squares: [
           { id: SquareId.N0, value: '' },
           { id: SquareId.N1, value: '' },
@@ -49,7 +49,7 @@ export default defineComponent({
         ]
       },
       {
-        id: ColumnId.G,
+        id: ColumnType.g,
         squares: [
           { id: SquareId.G0, value: '' },
           { id: SquareId.G1, value: '' },
@@ -59,7 +59,7 @@ export default defineComponent({
         ]
       },
       {
-        id: ColumnId.O,
+        id: ColumnType.o,
         squares: [
           { id: SquareId.O0, value: '' },
           { id: SquareId.O1, value: '' },
