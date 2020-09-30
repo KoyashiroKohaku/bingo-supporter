@@ -23,6 +23,16 @@
       <input type="checkbox" id="isDebug" v-model="isDebug" />
       <label for="isDebug">Debug: {{ isDebug }}</label>
     </div>
+
+    <div class="modal">
+      <Modal @close="closeModal" v-if="isOpenModal">
+        <CardInput @regist="regist" />
+        <template v-slot:footer>
+          <button @click="doSend">送信</button>
+        </template>
+      </Modal>
+      <button @click="openModal">開く</button>
+    </div>
   </div>
 </template>
 
@@ -30,6 +40,8 @@
 import { defineComponent, reactive, ref, watch } from 'vue';
 import Card from './Card.vue';
 import History from './History.vue';
+import Modal from './Modal.vue';
+import CardInput from './CardInput.vue';
 import { Bingo } from '@/lib/Bingo';
 import { CardInfo } from '@/lib/CardInfo';
 
@@ -37,7 +49,9 @@ export default defineComponent({
   name: 'Bingo',
   components: {
     Card,
-    History
+    History,
+    Modal,
+    CardInput
   },
   setup() {
     const bingo = reactive(new Bingo());
@@ -109,6 +123,19 @@ export default defineComponent({
 
     load();
 
+    const isOpenModal = ref(false);
+    const openModal = () => {
+      isOpenModal.value = true;
+    };
+    const closeModal = () => {
+      isOpenModal.value = false;
+    };
+
+    const regist = (cardInfo: CardInfo) => {
+      console.log('regist');
+      bingo.addCard(cardInfo);
+    };
+
     return {
       bingo,
       input,
@@ -119,7 +146,11 @@ export default defineComponent({
       redo,
       addHistory,
       clearHistory,
-      punchOut
+      punchOut,
+      isOpenModal,
+      openModal,
+      closeModal,
+      regist
     };
   }
 });
