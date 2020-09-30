@@ -1,8 +1,8 @@
-import { Bingo } from "@/lib/Bingo";
-import { CardInfo } from "@/lib/CardInfo";
+import { Bingo } from '@/lib/Bingo';
+import { CardInfo } from '@/lib/CardInfo';
 
-describe("Bingo.ts", () => {
-  it("constructor", () => {
+describe('Bingo.ts', () => {
+  it('constructor', () => {
     const bingo = new Bingo();
     expect(bingo.cards.length).toBe(0);
     expect(bingo.history.size).toBe(0);
@@ -10,7 +10,7 @@ describe("Bingo.ts", () => {
     expect(bingo.canRedo).toBe(false);
   });
 
-  it("add and remove cards", () => {
+  it('add and remove cards', () => {
     const bingo = new Bingo();
     expect(bingo.cards.length).toBe(0);
 
@@ -52,7 +52,7 @@ describe("Bingo.ts", () => {
     }
   });
 
-  it("add and clear history", () => {
+  it('add and clear history', () => {
     const bingo = new Bingo();
     const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
@@ -73,7 +73,7 @@ describe("Bingo.ts", () => {
     expect(bingo.history.has(1)).toBe(false);
   });
 
-  it("undo and redo", () => {
+  it('undo and redo', () => {
     const bingo = new Bingo();
     const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
@@ -130,7 +130,7 @@ describe("Bingo.ts", () => {
     expect(bingo.canRedo).toBe(false);
   });
 
-  describe("export", () => {
+  describe('export', () => {
     const bingo = new Bingo();
     expect(bingo.export()).toEqual({ cards: [], history: [] });
 

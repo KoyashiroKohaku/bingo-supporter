@@ -1,8 +1,8 @@
-import { Card } from "@/lib/Card";
-import { CardInfo } from "@/lib/CardInfo";
+import { Card } from '@/lib/Card';
+import { CardInfo } from '@/lib/CardInfo';
 
-describe("Card.ts", () => {
-  describe("constructor", () => {
+describe('Card.ts', () => {
+  describe('constructor', () => {
     const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
       i: [16, 17, 18, 19, 20],
@@ -13,7 +13,7 @@ describe("Card.ts", () => {
 
     const card = new Card(cardInfo);
 
-    it("cardInfoと一致しているか", () => {
+    it('cardInfoと一致しているか', () => {
       expect(card.b.map(s => s.value)).toEqual(cardInfo.b);
       expect(card.i.map(s => s.value)).toEqual(cardInfo.i);
       expect(card.n.map(s => s.value)).toEqual(cardInfo.n);
@@ -21,7 +21,7 @@ describe("Card.ts", () => {
       expect(card.o.map(s => s.value)).toEqual(cardInfo.o);
     });
 
-    it("columnsとb, i, n, g, oが一致しているか", () => {
+    it('columnsとb, i, n, g, oが一致しているか', () => {
       expect(card.columns[0]).toBe(card.b);
       expect(card.columns[1]).toBe(card.i);
       expect(card.columns[2]).toBe(card.n);
@@ -29,7 +29,7 @@ describe("Card.ts", () => {
       expect(card.columns[4]).toBe(card.o);
     });
 
-    it("b, i, n, g, oとsquaresが一致しているか", () => {
+    it('b, i, n, g, oとsquaresが一致しているか', () => {
       expect(card.b).toEqual(card.squares.slice(0, 5));
       expect(card.i).toEqual(card.squares.slice(5, 10));
       expect(card.n).toEqual(card.squares.slice(10, 15));
@@ -37,26 +37,26 @@ describe("Card.ts", () => {
       expect(card.o).toEqual(card.squares.slice(20, 25));
     });
 
-    it("square.hasPunchedOutの初期値がfalseとなっているか", () => {
+    it('square.hasPunchedOutの初期値がfalseとなっているか', () => {
       for (const square of card.squares) {
         expect(square.hasPunchedOut).toBe(false);
       }
     });
 
-    it("card.bingoLines.lengthの初期値が0となっているか", () => {
+    it('card.bingoLines.lengthの初期値が0となっているか', () => {
       expect(card.bingoLines.length).toBe(0);
     });
 
-    it("card.bingoCountの初期値が0となっているか", () => {
+    it('card.bingoCountの初期値が0となっているか', () => {
       expect(card.bingoCount).toBe(0);
     });
 
-    it("card.isBingoの初期値がfalseとなっているか", () => {
+    it('card.isBingoの初期値がfalseとなっているか', () => {
       expect(card.bingoLines.length).toBe(0);
     });
   });
 
-  describe("isBingo", () => {
+  describe('isBingo', () => {
     const bingoPatterns = [
       [0, 1, 2, 3, 4],
       [5, 6, 7, 8, 9],
@@ -91,7 +91,7 @@ describe("Card.ts", () => {
     }
   });
 
-  describe("isBingo", () => {
+  describe('isBingo', () => {
     const bingoPatterns = [
       [0, 1, 2, 3, 4],
       [5, 6, 7, 8, 9],
@@ -132,7 +132,7 @@ describe("Card.ts", () => {
       }
     }
   });
-  describe("export", () => {
+  describe('export', () => {
     const cardInfo: CardInfo = {
       b: [1, 2, 3, 4, 5],
       i: [16, 17, 18, 19, 20],
@@ -143,7 +143,7 @@ describe("Card.ts", () => {
 
     const card = new Card(cardInfo);
 
-    it("exportできているか", () => {
+    it('exportできているか', () => {
       expect(card.export()).toEqual(cardInfo);
     });
   });

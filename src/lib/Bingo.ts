@@ -1,6 +1,6 @@
-import { Card } from "./Card";
-import { BingoInfo } from "./BingoInfo";
-import { CardInfo } from "./CardInfo";
+import { Card } from './Card';
+import { BingoInfo } from './BingoInfo';
+import { CardInfo } from './CardInfo';
 
 export class Bingo {
   private readonly _cards: Array<Card> = new Array<Card>();

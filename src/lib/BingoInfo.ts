@@ -1,4 +1,4 @@
-import { CardInfo } from "./CardInfo";
+import { CardInfo } from './CardInfo';
 
 export interface BingoInfo {
   cards: Array<CardInfo>;
