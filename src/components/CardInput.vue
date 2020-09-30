@@ -14,8 +14,10 @@
             >
               <input
                 type="number"
-                min="1"
-                max="75"
+                :min="getMin(column.id)"
+                :max="getMax(column.id)"
+                minlength="1"
+                maxlength="2"
                 required
                 v-model="square.value"
               />
@@ -23,7 +25,8 @@
           </div>
         </div>
       </div>
-      <input type="submit" value="submit" />
+      <button @click="regist">Regist</button>
+      <button type="button" @click="debug">debug</button>
     </form>
   </div>
 </template>

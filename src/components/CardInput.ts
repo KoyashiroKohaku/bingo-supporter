@@ -1,10 +1,12 @@
 import { defineComponent, reactive } from 'vue';
 import { SquareId } from '@/lib/SquareId';
 import { ColumnType } from '@/lib/ColumnType';
+import { getMin, getMax } from '@/lib/utils';
+import { CardInfo } from '@/lib/CardInfo';
 
 export default defineComponent({
   name: 'CardInput',
-  setup() {
+  setup(_, context) {
     type square = {
       id: SquareId;
       value: string;
@@ -70,6 +72,28 @@ export default defineComponent({
       }
     ]);
 
-    return { columns };
+    const regist = () => {
+      type column = [number, number, number, number, number];
+      const [b, i, n, g, o] = columns;
+      const cardInfo: CardInfo = {
+        b: [...(b.squares.map(s => Number(s.value)) as column)],
+        i: [...(i.squares.map(s => Number(s.value)) as column)],
+        n: [...(n.squares.map(s => Number(s.value)) as column)],
+        g: [...(g.squares.map(s => Number(s.value)) as column)],
+        o: [...(o.squares.map(s => Number(s.value)) as column)]
+      };
+      context.emit('regist', cardInfo);
+    };
+
+    const debug = () => {
+      for (const column of columns) {
+        for (let i = 0; i < column.squares.length; i++) {
+          const square = column.squares[i];
+          square.value = (getMin(column.id) + i).toString();
+        }
+      }
+    };
+
+    return { columns, getMin, getMax, regist, debug };
   }
 });

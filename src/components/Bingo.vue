@@ -26,7 +26,7 @@
 
     <div class="modal">
       <Modal @close="closeModal" v-if="isOpenModal">
-        <CardInput />
+        <CardInput @regist="regist" />
         <template v-slot:footer>
           <button @click="doSend">送信</button>
         </template>
@@ -131,6 +131,11 @@ export default defineComponent({
       isOpenModal.value = false;
     };
 
+    const regist = (cardInfo: CardInfo) => {
+      console.log('regist');
+      bingo.addCard(cardInfo);
+    };
+
     return {
       bingo,
       input,
@@ -144,7 +149,8 @@ export default defineComponent({
       punchOut,
       isOpenModal,
       openModal,
-      closeModal
+      closeModal,
+      regist
     };
   }
 });
