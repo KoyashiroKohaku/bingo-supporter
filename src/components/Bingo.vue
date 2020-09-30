@@ -25,7 +25,12 @@
     </div>
 
     <div class="modal">
-      <Modal @close="closeModal" v-if="isOpenModal" />
+      <Modal @close="closeModal" v-if="isOpenModal">
+        <CardInput />
+        <template v-slot:footer>
+          <button @click="doSend">送信</button>
+        </template>
+      </Modal>
       <button @click="openModal">開く</button>
     </div>
   </div>
@@ -36,6 +41,7 @@ import { defineComponent, reactive, ref, watch } from 'vue';
 import Card from './Card.vue';
 import History from './History.vue';
 import Modal from './Modal.vue';
+import CardInput from './CardInput.vue';
 import { Bingo } from '@/lib/Bingo';
 import { CardInfo } from '@/lib/CardInfo';
 
@@ -44,7 +50,8 @@ export default defineComponent({
   components: {
     Card,
     History,
-    Modal
+    Modal,
+    CardInput
   },
   setup() {
     const bingo = reactive(new Bingo());
