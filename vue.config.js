@@ -1,3 +1,6 @@
 module.exports = {
-  publicPath: '/bingo-supporter/'
+  publicPath: '/bingo-supporter/',
+  configureWebpack: {
+    devtool: 'source-map'
+  }
 };
